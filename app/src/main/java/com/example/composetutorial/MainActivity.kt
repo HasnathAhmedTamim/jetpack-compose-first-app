@@ -19,6 +19,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+import androidx.compose.foundation.border
+
+import androidx.compose.material3.Surface
+import com.example.composetutorial.ui.theme.ComposeTutorialTheme
+
+
 
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -44,31 +50,48 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MessageCard(msg: Message) {
-    Row(modifier = Modifier.padding(all = 8.dp).background(Color.Blue).padding(all = 6.dp)) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        shadowElevation = 2.dp,
+        modifier = Modifier.padding(all = 4.dp)
+    ){Row(modifier = Modifier.padding(all = 8.dp).background(Color.Blue).padding(all = 6.dp)) {
         Image(
             painter = painterResource(R.drawable.profile_picture),
             contentDescription = "Contact profile picture",
-            modifier = Modifier.size(40.dp).clip(CircleShape)
+            modifier = Modifier.size(40.dp).clip(CircleShape).border(1.5.dp, MaterialTheme.colorScheme.tertiary, CircleShape)
 
         )
 
         Spacer(modifier = Modifier.width(8.dp))
         Column {
-            Text(text = msg.author , color = Color.White, style = MaterialTheme.typography.titleMedium)
+            Text(text = msg.author , color = Color.White, style = MaterialTheme.typography.titleMedium )
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = msg.body , color = Color.White, style = MaterialTheme.typography.bodyMedium)
         }
 
-    }
+    }}
+
 
 }
 
-@Preview
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mode",
+    uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 fun PreviewMessageCard() {
-    MessageCard(
-        msg = Message("Sarah", "Hey! Check out Jetpack Compose")
-    )
+    ComposeTutorialTheme {
+        Surface {
+            MessageCard(
+                msg = Message("Sarah", "Take a look at Jetpack Compose!")
+            )
+        }
+    }
 }
 
+
 //Styling with Modifiers
+//Apply Theme Colors and Typography
+//surface
